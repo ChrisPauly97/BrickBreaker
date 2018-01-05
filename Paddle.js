@@ -1,4 +1,3 @@
-"use strict";
 // Defines a paddle object
 class Paddle {
   constructor(xchange,x,y,width,height){
@@ -23,7 +22,7 @@ class Paddle {
 	show() {
 		rect(this.x, this.y, this.width, this.height);
 	}
-  
+
 	// Moves the paddle by a given value
 	move(value) {
 		this.xchange = value;

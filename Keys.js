@@ -1,4 +1,3 @@
-"use strict";
 // Simple Paddle Movement
 function checkKeys() {
   PaddleIsMoving = 0

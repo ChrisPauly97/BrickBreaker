@@ -1,4 +1,3 @@
-"use strict";
 // Defines a brick object
 class Brick{
   constructor(health, x,y,width,height,extra){

@@ -1,4 +1,3 @@
-"use strict";
 var slow = false,invert = false,hit = false;
 var posX,posY,updated,PaddleIsMoving;
 var width = 600,height = 400;

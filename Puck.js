@@ -1,4 +1,3 @@
-"use strict";
 //Defines a puck object
 class Puck {
   constructor(r, xspeed, yspeed, x, y) {
@@ -48,7 +47,7 @@ class Puck {
       this.xspeed *= -1;
     }
   }
-  
+
   // If the paddle was moving during the collision, add momentum
   addMomentum() {
     if (PaddleIsMoving == -1 && this.xspeed < 5) {
