@@ -1,59 +1,42 @@
 "use strict";
-var slow = false,invert = false,gameStart = false,hit = false;
-var PaddleIsMoving;
-var rand1,rand2,rand3,posX,posY,updated;
+var slow = false,invert = false,hit = false;
+var posX,posY,updated,PaddleIsMoving;
 var width = 600,height = 400;
 var bricks = [],pucks = [],paddles = [];
 var brickX = 0,brickY = 0,count = 0,i = 0;
 
 function setup() {
   createCanvas(600,400);
+  createBricks();
   paddles.push(new Paddle(0,300,380,80,20));
   pucks.push(new Puck(12,0,0,300,200));
-
-  for(i = 0; i < 26; i++){
-    var extra = false;
-    if(random(0,1) > 0.9){
-      extra = true;
-    }
-    if(brickX + width/8 > 600){
-      brickX = 0;
-      brickY+=20;
-      bricks.push(new Brick((floor(random(1,4))),brickX,brickY,width/8,20,extra));
-    }else{
-      bricks.push(new Brick(floor(random(1,4)),brickX,brickY,width/8,20,extra));
-      brickX += width/8;
-    }
-  }
+  pucks[0].reset();
 }
 function draw() {
   background(0);
+  checkKeys(0);
   // Check each brick
   for(let brick of bricks){
     brick.show();
     if(brick.health == 0){
-      continue
-    }
-    for(let i = 0; i < pucks.length; i++){
-      hit = puckCollision(pucks[i],brick)
-      if(hit) createPuck(brick);
-      brick.checkHealth(pucks[i],hit);
+      continue;
     }
 
+    // Check if any puck collides with the bricks
+    for(let puck of pucks){
+      hit = puckCollision(puck,brick)
+      if(hit) createPuck(brick);
+      brick.checkHealth(puck,hit);
+    }
 
     if(brick.extra){
-      push();
-      textSize(12);
-      noStroke();
-      fill(0,0,255);
-      ellipse(brick.x + brick.width/2,brick.y + brick.height/2,10);
-      pop();
+      brick.extraBall();
     }
-
   }
+
+  // Check if any puck collides with the paddles
   for(let puck of pucks){
-    var paddleHit = puckCollision(puck, paddles[0]);
-    if(paddleHit){
+    if(puckCollision(puck, paddles[0])){
       puck.addMomentum();
     }
     puck.update();
@@ -61,17 +44,22 @@ function draw() {
 	  puck.yEdges();
 	  puck.xEdges();
   }
+
+  // Update and show every paddle
   for(let paddle of paddles){
     paddle.update();
     paddle.show();
   }
 }
+
+// Collision detection maths
 function collides(posX, posY, object, puck) {
   var DeltaX = posX - Math.max(object.x, Math.min(posX, object.x + object.width ));
   var DeltaY = posY - Math.max(object.y, Math.min(posY, object.y + object.height));
   return ((DeltaX * DeltaX + DeltaY * DeltaY) < (puck.r * puck.r))
 }
 
+// Logic for puck collision
 function puckCollision(puck, paddle) {
   posX = puck.x + puck.xspeed;
   posY = puck.y + puck.yspeed;
@@ -92,6 +80,23 @@ function puckCollision(puck, paddle) {
   return false;
 }
 
+// Create the bricks for the level
+function createBricks(){
+  for(i = 0; i < 26; i++){
+    var extra = false;
+    if(random(0,1) > 0.9){
+      extra = true;
+    }
+    if(brickX + width/8 > 600){
+      brickX = 0;
+      brickY+=20;
+      bricks.push(new Brick((floor(random(1,4))),brickX,brickY,width/8,20,extra));
+    }else{
+      bricks.push(new Brick(floor(random(1,4)),brickX,brickY,width/8,20,extra));
+      brickX += width/8;
+    }
+  }
+}
 function createPuck(brick) {
 
   if (brick.extra) {

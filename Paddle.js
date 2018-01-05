@@ -18,10 +18,12 @@ class Paddle {
 			this.x = 520;
 		}
 	}
+
 	// Draws the paddle on a given side
 	show() {
 		rect(this.x, this.y, this.width, this.height);
 	}
+  
 	// Moves the paddle by a given value
 	move(value) {
 		this.xchange = value;

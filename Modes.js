@@ -9,6 +9,7 @@
 // 			slow = false;
 // 		}
 // 	}
+
 // 	flickerMode() {
 // 		if (count >= 400 && count <= 700) {
 // 			if (random(0, 1) > 0.85 && gameStart === true) {

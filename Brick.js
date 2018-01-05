@@ -1,4 +1,5 @@
 "use strict";
+// Defines a brick object
 class Brick{
   constructor(health, x,y,width,height,extra){
     this.health = health;
@@ -8,7 +9,7 @@ class Brick{
     this.height = height;
     this.extra = extra;
   }
-
+  // Displays the brick object based on its health
   show(){
     push();
     switch (this.health) {
@@ -35,6 +36,8 @@ class Brick{
     rect(this.x,this.y,this.width,this.height);
     pop();
   }
+
+  // changes the health if a collision has occurred
   checkHealth(puck,hit){
     if(hit){
       if(this.health >= 1){
@@ -43,5 +46,15 @@ class Brick{
         this.health == 0;
       }
     }
+  }
+
+  // Display that the brick gives a bonus ball
+  extraBall(){
+    push();
+    textSize(12);
+    noStroke();
+    fill(0,0,255);
+    ellipse(this.x + this.width/2,this.y + this.height/2,10);
+    pop();
   }
 }
