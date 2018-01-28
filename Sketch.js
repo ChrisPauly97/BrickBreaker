@@ -15,6 +15,7 @@ function setup() {
 }
 function draw() {
   background(0);
+  checkEnd()
   textAlign(CENTER);
   var txt = ("lives: " + lives)
   fill(255);
@@ -39,6 +40,7 @@ function draw() {
     }
   }
 
+
   // Check if any puck collides with the paddles
   for(let puck of pucks){
     if(puckCollision(puck, paddles[0])){
@@ -54,6 +56,20 @@ function draw() {
   for(let paddle of paddles){
     paddle.update();
     paddle.show();
+  }
+}
+
+function checkEnd(){
+  let total = 0
+  for(let brick of bricks){
+    if(brick.health == 0){
+      total += 1
+    }
+  }
+  if(total == bricks.length){
+    lives = 3;
+    createBricks();
+    pucks[0].reset();
   }
 }
 
@@ -100,7 +116,7 @@ function createBricks(){
       brickY+=20;
       bricks.push(new Brick((floor(random(1,4))),brickX,brickY,width/8,20,extra));
     }else{
-      bricks.push(new Brick(floor(random(1,4)),brickX,brickY,width/8,20,extra));
+      bricks.push(new Brick((floor(random(1,4))),brickX,brickY,width/8,20,extra));
       brickX += width/8;
     }
   }

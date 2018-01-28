@@ -36,6 +36,7 @@ class Brick{
     pop();
   }
 
+
   // changes the health if a collision has occurred
   checkHealth(puck,hit){
     if(hit){
