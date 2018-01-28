@@ -18,6 +18,10 @@ class Puck {
 
   // Reset the pucks color and position
   reset() {
+    if(lives == 0){
+      createBricks();
+      lives = 3;
+    }
     this.xspeed = 2;
     this.yspeed = 4;
     this.x = width / 2;
@@ -34,6 +38,7 @@ class Puck {
   xEdges() {
     if (this.y + this.r > 400 && pucks.length == 1) {
       this.reset();
+      lives--;
     } else if(pucks.length > 1 && this.y + this.r > 400){
         pucks.splice(pucks.indexOf(this),1)
     } else if (this.y - this.r < 0) {

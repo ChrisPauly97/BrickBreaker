@@ -3,6 +3,7 @@ var posX,posY,updated,PaddleIsMoving;
 var width = 600,height = 400;
 var bricks = [],pucks = [],paddles = [];
 var brickX = 0,brickY = 0,count = 0,i = 0;
+var lives = 3;
 
 function setup() {
   createCanvas(600,400);
@@ -10,9 +11,14 @@ function setup() {
   paddles.push(new Paddle(0,300,380,80,20));
   pucks.push(new Puck(12,0,0,300,200));
   pucks[0].reset();
+
 }
 function draw() {
   background(0);
+  textAlign(CENTER);
+  var txt = ("lives: " + lives)
+  fill(255);
+  text(txt,550,100)
   checkKeys(0);
   // Check each brick
   for(let brick of bricks){
@@ -81,6 +87,9 @@ function puckCollision(puck, paddle) {
 
 // Create the bricks for the level
 function createBricks(){
+  bricks = [];
+  brickX = 0;
+  brickY = 0;
   for(i = 0; i < 26; i++){
     var extra = false;
     if(random(0,1) > 0.9){
@@ -96,8 +105,8 @@ function createBricks(){
     }
   }
 }
+// Create a new Puck
 function createPuck(brick) {
-
   if (brick.extra) {
     pucks.push(new Puck(12, 3, 2, brick.x + brick.width / 2, brick.y + 10))
     brick.extra = false;
